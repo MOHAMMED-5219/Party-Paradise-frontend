@@ -1,64 +1,514 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Party Paradise</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial;
-      background: #f4f4f4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      position: relative;
+      overflow: hidden;
     }
-    .login-box {
-      background: white;
-      padding: 30px;
-      width: 300px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-    input, button {
+
+    /* Animated background decorations */
+    .background-decoration {
+      position: fixed;
       width: 100%;
-      padding: 10px;
-      margin: 10px 0;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      overflow: hidden;
     }
-    button {
-      background: #333;
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .blob1 {
+      width: 300px;
+      height: 300px;
+      background: white;
+      top: -50px;
+      left: -50px;
+      animation-delay: 0s;
+    }
+
+    .blob2 {
+      width: 250px;
+      height: 250px;
+      background: white;
+      bottom: -50px;
+      right: -50px;
+      animation-delay: 2s;
+    }
+
+    .blob3 {
+      width: 200px;
+      height: 200px;
+      background: white;
+      top: 50%;
+      right: 10%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      50% {
+        transform: translate(30px, -30px) scale(1.1);
+      }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 450px;
+      padding: 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .login-wrapper {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.3);
+      overflow: hidden;
+      animation: slideUp 0.6s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      padding: 50px 30px;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="15" fill="white" opacity="0.05"/><circle cx="80" cy="80" r="20" fill="white" opacity="0.05"/><circle cx="50" cy="50" r="10" fill="white" opacity="0.05"/></svg>');
+      pointer-events: none;
+    }
+
+    .login-header h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+      font-weight: 700;
+      position: relative;
+      z-index: 2;
+      letter-spacing: -0.5px;
+    }
+
+    .login-header p {
+      font-size: 14px;
+      opacity: 0.95;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 2;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .login-icon {
+      font-size: 56px;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 2;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .login-form {
+      padding: 45px 35px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #667eea;
+      font-size: 18px;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 13px 15px 13px 45px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      background: #f8f9ff;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+      background-color: white;
+    }
+
+    .form-group input:focus + .input-icon {
+      color: #764ba2;
+      transform: translateY(-50%) scale(1.2);
+    }
+
+    .form-group input::placeholder {
+      color: #999;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      position: relative;
+      overflow: hidden;
     }
+
+    .login-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: left 0.3s ease;
+    }
+
+    .login-btn:hover::before {
+      left: 100%;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    }
+
+    .login-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .login-btn.loading {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto;
+    }
+
+    .login-btn.loading .spinner {
+      display: block;
+    }
+
+    .login-btn.loading .btn-text {
+      display: none;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     .error {
-      color: red;
-      font-size: 14px;
+      color: #e74c3c;
+      font-size: 13px;
+      margin-top: 15px;
+      padding: 12px 15px;
+      background-color: #ffe0e0;
+      border-left: 4px solid #e74c3c;
+      border-radius: 8px;
+      display: none;
+      animation: shake 0.5s ease;
+    }
+
+    .error.show {
+      display: block;
+      animation: shake 0.5s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .success-message {
+      color: #27ae60;
+      font-size: 13px;
+      margin-top: 15px;
+      padding: 12px 15px;
+      background-color: #e0ffe0;
+      border-left: 4px solid #27ae60;
+      border-radius: 8px;
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 25px;
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 480px) {
+      .login-header {
+        padding: 40px 25px;
+      }
+
+      .login-form {
+        padding: 35px 25px;
+      }
+
+      .login-header h1 {
+        font-size: 28px;
+      }
+
+      .login-icon {
+        font-size: 48px;
+      }
+
+      .blob1, .blob2, .blob3 {
+        opacity: 0.05;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="background-decoration">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
 
-<div class="login-box">
-  <h2>Admin Login</h2>
 
-  <input type="email" id="email" placeholder="Admin Email">
-  <input type="password" id="password" placeholder="Password">
-  <button onclick="login()">Login</button>
+  <div class="container">
+    <div class="login-wrapper">
+      <div class="login-header">
+        <div class="login-icon">🎉</div>
+        <h1>Admin Portal</h1>
+        <p>Party Paradise Management</p>
+      </div>
 
-  <p class="error" id="error"></p>
-</div>
+      <div class="login-form">
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-wrapper">
+              <input type="email" id="email" placeholder="Enter your admin email" required>
+              <span class="input-icon">📧</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="password" placeholder="Enter your password" required>
+              <span class="input-icon">🔐</span>
+            </div>
+          </div>
+
+          <button type="button" class="login-btn" onclick="login()" id="loginBtn">
+            <span class="btn-text">Login</span>
+            <div class="spinner"></div>
+          </button>
+
+          <p class="error" id="error"></p>
+          <p class="success-message" id="success"></p>
+        </form>
+      </div>
+
+      <div class="footer-text">
+        🔒 Secure Admin Access • Party Paradise © 2026
+      </div>
+    </div>
+  </div>
 
 <script>
 function login() {
-  const email = document.getElementById("email").value;
+  const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
+  const errorElement = document.getElementById("error");
+  const successElement = document.getElementById("success");
+  const loginBtn = document.getElementById("loginBtn");
 
-  // 🔐 ADMIN CREDENTIALS (change later)
-  if (email === "admin@partyparadise.com" && password === "admin123") {
-    localStorage.setItem("adminLoggedIn", "true");
-    window.location.href = "admin.html";
-  } else {
-    document.getElementById("error").innerText = "Invalid credentials";
+  // Clear previous messages
+  errorElement.classList.remove("show");
+  successElement.classList.remove("show");
+  errorElement.innerText = "";
+  successElement.innerText = "";
+
+  // Validation
+  if (!email || !password) {
+    errorElement.innerText = "⚠️ Please enter both email and password";
+    errorElement.classList.add("show");
+    return;
   }
+
+  // Email validation
+  if (!isValidEmail(email)) {
+    errorElement.innerText = "⚠️ Please enter a valid email address";
+    errorElement.classList.add("show");
+    return;
+  }
+
+  // Show loading state
+  loginBtn.classList.add("loading");
+
+  // Simulate API call delay
+  setTimeout(() => {
+    // 🔐 ADMIN CREDENTIALS (change later)
+    if (email === "admin@partyparadise.com" && password === "admin123") {
+      // Success
+      successElement.innerText = "✅ Login successful! Redirecting...";
+      successElement.classList.add("show");
+
+      localStorage.setItem("adminLoggedIn", "true");
+
+      // Redirect after a brief delay
+      setTimeout(() => {
+        window.location.href = "admin.html";
+      }, 800);
+    } else {
+      // Failure
+      errorElement.innerText = "❌ Invalid email or password. Please try again.";
+      errorElement.classList.add("show");
+      loginBtn.classList.remove("loading");
+
+      // Shake animation - shake the form
+      document.querySelector(".login-wrapper").style.animation = "none";
+      setTimeout(() => {
+        document.querySelector(".login-wrapper").style.animation = "";
+      }, 10);
+    }
+  }, 1000);
 }
+
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+// Allow Enter key to submit form
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("loginForm").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      login();
+    }
+  });
+
+  // Add focus effects to inputs
+  const inputs = document.querySelectorAll(".form-group input");
+  inputs.forEach(input => {
+    input.addEventListener("focus", function() {
+      this.parentElement.parentElement.classList.add("focused");
+    });
+    input.addEventListener("blur", function() {
+      this.parentElement.parentElement.classList.remove("focused");
+    });
+  });
+});
 </script>
 
 </body>
