@@ -623,4 +623,16 @@ h5{
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 100;
     font-size: medium;
+.form-message {
+  display: block !important;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.form-message.success {
+  color: green;
+}
+
+.form-message.error {
+  color: red;
 }
