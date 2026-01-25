@@ -643,3 +643,20 @@ h5{
   word-break: break-word;
   line-height: 1.5;
 }
+.call-btn, .mail-btn, .wa-btn {
+  border: none;
+  padding: 6px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.call-btn { background: #2ecc71; color: white; }
+.mail-btn { background: #3498db; color: white; }
+.wa-btn   { background: #25d366; color: white; }
+
+.call-btn:hover,
+.mail-btn:hover,
+.wa-btn:hover {
+  opacity: 0.85;
+}

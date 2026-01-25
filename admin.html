@@ -87,6 +87,20 @@
       margin-top: 5px;
       font-size: 12px;
     }
+
+    /* ✅ QUICK ACTION BUTTONS */
+    .action-btn {
+      border: none;
+      padding: 6px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 4px;
+    }
+
+    .call-btn { background: #2ecc71; color: white; }
+    .mail-btn { background: #3498db; color: white; }
+    .wa-btn   { background: #25d366; color: white; }
   </style>
 
   <script>
@@ -159,9 +173,11 @@ async function loadContacts() {
         </td>
         <td>${new Date(c.createdAt).toLocaleString()}</td>
         <td>
-          <button class="delete-btn" onclick="deleteContact('${c._id}')">
-            Delete
-          </button>
+          <!-- ✅ QUICK ACTIONS -->
+          <button class="action-btn call-btn" onclick="callCustomer('${c.phone}')">📞</button>
+          <button class="action-btn mail-btn" onclick="mailCustomer('${c.email}')">📧</button>
+          <button class="action-btn wa-btn" onclick="whatsappCustomer('${c.phone}')">💬</button>
+          <button class="delete-btn" onclick="deleteContact('${c._id}')">🗑️</button>
         </td>
       </tr>
     `;
@@ -178,6 +194,20 @@ function filterContacts() {
       ? ""
       : "none";
   });
+}
+
+/* ---------- QUICK ACTION FUNCTIONS ---------- */
+function callCustomer(phone) {
+  window.open(`tel:${phone}`);
+}
+
+function mailCustomer(email) {
+  window.open(`mailto:${email}`);
+}
+
+function whatsappCustomer(phone) {
+  const num = phone.replace(/\D/g, "");
+  window.open(`https://wa.me/91${num}`, "_blank");
 }
 
 /* ---------- DELETE ---------- */
