@@ -164,6 +164,21 @@
       padding: 45px 35px;
     }
 
+    .forgot-password {
+      display: inline-flex;
+      margin-top: 12px;
+      color: #667eea;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .forgot-password:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+
     .form-group {
       margin-bottom: 25px;
       position: relative;
@@ -351,6 +366,112 @@
       letter-spacing: 0.5px;
     }
 
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(15, 23, 42, 0.52);
+      padding: 20px;
+      backdrop-filter: blur(6px);
+    }
+
+    .modal.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: 18px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+      overflow: hidden;
+      animation: slideUp 0.25s ease-out;
+    }
+
+    .modal-head {
+      padding: 22px 24px 16px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .modal-head h3 {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .modal-head p {
+      font-size: 13px;
+      opacity: 0.92;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .modal-body {
+      padding: 22px 24px 24px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .secondary-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #d9def7;
+      background: #fff;
+      color: #667eea;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .secondary-btn:hover {
+      background: #f6f8ff;
+    }
+
+    .reset-step {
+      display: none;
+    }
+
+    .reset-step.active {
+      display: block;
+    }
+
+    .otp-hint {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .mini-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .mobile-pill {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #4f46e5;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
     @media (max-width: 480px) {
       .login-header {
         padding: 40px 25px;
@@ -413,6 +534,8 @@
             <div class="spinner"></div>
           </button>
 
+          <a href="#" class="forgot-password" id="forgotPasswordLink">Forgot password?</a>
+
           <p class="error" id="error"></p>
           <p class="success-message" id="success"></p>
         </form>
@@ -424,7 +547,156 @@
     </div>
   </div>
 
+  <div class="modal" id="resetModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Reset Password</h3>
+        <p>Verify the OTP sent to the registered mobile number.</p>
+      </div>
+      <div class="modal-body">
+        <div id="resetStep1" class="reset-step active">
+          <label class="mini-label" for="resetMobile">Registered Mobile Number</label>
+          <input type="tel" id="resetMobile" value="+91 8884093228" readonly>
+          <div class="mobile-pill">Registered mobile on file</div>
+          <p class="otp-hint">An OTP will be generated for the registered mobile number. This demo flow simulates the OTP step inside the admin login page.</p>
+          <div class="modal-actions">
+            <button type="button" class="login-btn" id="sendOtpBtn" style="margin-top:0;">Send OTP</button>
+            <button type="button" class="secondary-btn" id="cancelResetBtn">Cancel</button>
+          </div>
+        </div>
+
+        <div id="resetStep2" class="reset-step">
+          <label class="mini-label" for="otpInput">Enter OTP</label>
+          <input type="text" id="otpInput" placeholder="Enter 6-digit OTP" maxlength="6">
+
+          <label class="mini-label" for="newPassword" style="margin-top:16px;">New Password</label>
+          <input type="password" id="newPassword" placeholder="Create new password">
+
+          <label class="mini-label" for="confirmPassword" style="margin-top:16px;">Confirm Password</label>
+          <input type="password" id="confirmPassword" placeholder="Confirm new password">
+
+          <p class="otp-hint" id="otpInfo"></p>
+          <div class="modal-actions">
+            <button type="button" class="login-btn" id="verifyOtpBtn" style="margin-top:0;">Verify and Reset</button>
+            <button type="button" class="secondary-btn" id="backBtn">Back</button>
+          </div>
+        </div>
+
+        <p class="error" id="resetError" style="display:none;"></p>
+        <p class="success-message" id="resetSuccess" style="display:none;"></p>
+      </div>
+    </div>
+  </div>
+
 <script>
+const DEFAULT_ADMIN_PASSWORD = "admin123";
+const ADMIN_PASSWORD_KEY = "partyParadiseAdminPassword";
+const OTP_KEY = "partyParadiseAdminOtp";
+const OTP_EXPIRES_KEY = "partyParadiseAdminOtpExpires";
+
+function getStoredAdminPassword() {
+  return localStorage.getItem(ADMIN_PASSWORD_KEY) || DEFAULT_ADMIN_PASSWORD;
+}
+
+function setMessage(element, text, type) {
+  element.classList.remove("show");
+  element.style.display = "block";
+  element.textContent = text;
+  element.style.color = type === "success" ? "#1f8f56" : "#e74c3c";
+  element.style.backgroundColor = type === "success" ? "#e0ffe0" : "#ffe0e0";
+  element.style.borderLeftColor = type === "success" ? "#27ae60" : "#e74c3c";
+  element.classList.add("show");
+}
+
+function clearMessage(element) {
+  element.classList.remove("show");
+  element.style.display = "none";
+  element.textContent = "";
+}
+
+function openResetModal() {
+  document.getElementById("resetModal").classList.add("show");
+  document.getElementById("resetModal").setAttribute("aria-hidden", "false");
+  document.getElementById("resetStep1").classList.add("active");
+  document.getElementById("resetStep2").classList.remove("active");
+  document.getElementById("otpInput").value = "";
+  document.getElementById("newPassword").value = "";
+  document.getElementById("confirmPassword").value = "";
+  clearMessage(document.getElementById("resetError"));
+  clearMessage(document.getElementById("resetSuccess"));
+}
+
+function closeResetModal() {
+  document.getElementById("resetModal").classList.remove("show");
+  document.getElementById("resetModal").setAttribute("aria-hidden", "true");
+}
+
+function generateOtp() {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+function startOtpFlow() {
+  const otp = generateOtp();
+  const expiresAt = Date.now() + 5 * 60 * 1000;
+  localStorage.setItem(OTP_KEY, otp);
+  localStorage.setItem(OTP_EXPIRES_KEY, String(expiresAt));
+
+  document.getElementById("otpInfo").innerHTML =
+    `OTP sent to the registered mobile number <span class="mobile-pill">+91 8884093228</span>. Demo OTP: <strong>${otp}</strong>`;
+
+  document.getElementById("resetStep1").classList.remove("active");
+  document.getElementById("resetStep2").classList.add("active");
+  clearMessage(document.getElementById("resetError"));
+  clearMessage(document.getElementById("resetSuccess"));
+}
+
+function verifyAndResetPassword() {
+  const enteredOtp = document.getElementById("otpInput").value.trim();
+  const newPassword = document.getElementById("newPassword").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+  const resetError = document.getElementById("resetError");
+  const resetSuccess = document.getElementById("resetSuccess");
+  const savedOtp = localStorage.getItem(OTP_KEY);
+  const expiresAt = Number(localStorage.getItem(OTP_EXPIRES_KEY) || 0);
+
+  clearMessage(resetError);
+  clearMessage(resetSuccess);
+
+  if (!enteredOtp || !newPassword || !confirmPassword) {
+    setMessage(resetError, "Please fill in the OTP and both password fields.", "error");
+    return;
+  }
+
+  if (Date.now() > expiresAt) {
+    setMessage(resetError, "OTP expired. Please request a new one.", "error");
+    return;
+  }
+
+  if (enteredOtp !== savedOtp) {
+    setMessage(resetError, "Invalid OTP. Please try again.", "error");
+    return;
+  }
+
+  if (newPassword.length < 6) {
+    setMessage(resetError, "Password should be at least 6 characters.", "error");
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    setMessage(resetError, "Passwords do not match.", "error");
+    return;
+  }
+
+  localStorage.setItem(ADMIN_PASSWORD_KEY, newPassword);
+  localStorage.removeItem(OTP_KEY);
+  localStorage.removeItem(OTP_EXPIRES_KEY);
+  setMessage(resetSuccess, "Password updated successfully. You can now log in with the new password.", "success");
+
+  setTimeout(() => {
+    closeResetModal();
+  }, 1200);
+}
+
 function login() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
@@ -458,7 +730,7 @@ function login() {
   // Simulate API call delay
   setTimeout(() => {
     // 🔐 ADMIN CREDENTIALS (change later)
-    if (email === "admin@partyparadise.com" && password === "admin123") {
+    if (email === "admin@partyparadise.com" && password === getStoredAdminPassword()) {
       // Success
       successElement.innerText = "✅ Login successful! Redirecting...";
       successElement.classList.add("show");
@@ -507,6 +779,27 @@ document.addEventListener("DOMContentLoaded", function() {
     input.addEventListener("blur", function() {
       this.parentElement.parentElement.classList.remove("focused");
     });
+  });
+
+  document.getElementById("forgotPasswordLink").addEventListener("click", function(e) {
+    e.preventDefault();
+    openResetModal();
+  });
+
+  document.getElementById("sendOtpBtn").addEventListener("click", startOtpFlow);
+  document.getElementById("verifyOtpBtn").addEventListener("click", verifyAndResetPassword);
+  document.getElementById("cancelResetBtn").addEventListener("click", closeResetModal);
+  document.getElementById("backBtn").addEventListener("click", function() {
+    document.getElementById("resetStep2").classList.remove("active");
+    document.getElementById("resetStep1").classList.add("active");
+    clearMessage(document.getElementById("resetError"));
+    clearMessage(document.getElementById("resetSuccess"));
+  });
+
+  document.getElementById("resetModal").addEventListener("click", function(e) {
+    if (e.target === this) {
+      closeResetModal();
+    }
   });
 });
 </script>

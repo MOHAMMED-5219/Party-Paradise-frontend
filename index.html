@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <a class="skip-link" href="#home">Skip to content</a>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
@@ -32,13 +33,19 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="hero-background hero-background-a" aria-hidden="true"></div>
+        <div class="hero-background hero-background-b" aria-hidden="true"></div>
+        <span class="hero-orb hero-orb-one" aria-hidden="true"></span>
+        <span class="hero-orb hero-orb-two" aria-hidden="true"></span>
         <div class="hero-content">
-             <h1 class="hero-title"><b>Welcome To Party-Paradise</b></h1>
-            <h5 class="hero-title">Make Your Party Unforgettable</h5>
-        <div>
-            <h6><p class="hero-subtitle">Premium decoration services for all your special occasions</p></h6>
-    
-        </div>
+            <p class="hero-kicker">Premium decoration services for birthdays, weddings, and celebrations</p>
+            <h1 class="hero-title">Welcome To Party-Paradise</h1>
+            <p class="hero-subtitle">Make Your Party Unforgettable</p>
+            <p class="hero-description">Premium decoration services for all your special occasions</p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+                <button type="button" class="btn btn-secondary" data-open-booking>Book Your Date</button>
+            </div>
 
         </div>
     </section>
@@ -104,7 +111,7 @@
 
       <!-- IMAGE -->
       <div class="gallery-item">
-        <img src="gallery/event1.jpeg" alt="Birthday Decoration">
+                <img src="gallery/event1.jpeg" alt="Birthday Decoration" loading="lazy" decoding="async">
         <div class="gallery-overlay">
           <h3>Birthday Event</h3>
         </div>
@@ -112,14 +119,14 @@
 
       <!-- IMAGE -->
       <div class="gallery-item">
-        <img src="gallery/event2.jpeg" alt="Birthday Decoration">
+                <img src="gallery/event2.jpeg" alt="Birthday Decoration" loading="lazy" decoding="async">
         <div class="gallery-overlay">
           <h3>Wedding Event</h3>
         </div>
       </div>
       <!-- IMAGE -->
       <div class="gallery-item">
-        <img src="gallery/event3.jpeg" alt="Wedding Decoration">
+                <img src="gallery/event3.jpeg" alt="Wedding Decoration" loading="lazy" decoding="async">
         <div class="gallery-overlay">
           <h3>Wedding Event</h3>
         </div>
@@ -129,8 +136,8 @@
 
       <!-- VIDEO -->
       <div class="gallery-item">
-        <video controls muted>
-          <source src="gallery/event3.mp4" type="video/mp4" alt="Wedding Decoration">
+                <video controls muted playsinline preload="metadata">
+                    <source src="gallery/event3.mp4" type="video/mp4">
         </video>
         <div class="gallery-overlay">
           <h3>Wedding Decoration Video</h3>
@@ -182,27 +189,31 @@
   <form id="contactForm">
 
     <div class="form-group">
-      <input type="text" id="name" placeholder="Your Name" required>
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="Your Name" required autocomplete="name">
     </div>
 
     <div class="form-group">
-      <input type="email" id="email" placeholder="Your Email" required>
+            <label for="email">Your Email</label>
+            <input type="email" id="email" placeholder="Your Email" required autocomplete="email">
     </div>
 
     <div class="form-group">
-      <input type="tel" id="phone" placeholder="Your Phone" required>
+            <label for="phone">Your Phone</label>
+            <input type="tel" id="phone" placeholder="Your Phone" required autocomplete="tel">
     </div>
 
     <div class="form-group">
-      <textarea id="message" placeholder="Your Message" rows="5"></textarea>
+            <label for="message">Your Message</label>
+            <textarea id="message" placeholder="Your Message" rows="5"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary">
-      Send Message
+        <button type="submit" class="btn btn-primary btn-submit">
+            <span class="btn-text">Send Message</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
     </button>
 
-    <!-- ✅ MESSAGE WILL APPEAR HERE -->
-    <p id="formMessage" class="form-message" style="display:none;"></p>
+        <p id="formMessage" class="form-message" aria-live="polite"></p>
 
   </form>
 </div>
@@ -212,35 +223,53 @@
     <!-- Booking Modal -->
     <div id="bookingModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+                <button type="button" class="close" aria-label="Close booking modal">&times;</button>
             <h2>Place Your Order</h2>
 
             <form id="bookingForm">
                 <input type="hidden" id="packageId" name="packageId">
                 <div class="form-group">
-                    <input type="text" id="bookingName" name="name" placeholder="Your Name" required>
+                        <label for="bookingName">Your Name</label>
+                        <input type="text" id="bookingName" name="name" placeholder="Your Name" required autocomplete="name">
                 </div>
                 <div class="form-group">
-                    <input type="email" id="bookingEmail" name="email" placeholder="Your Email" required>
+                        <label for="bookingEmail">Your Email</label>
+                        <input type="email" id="bookingEmail" name="email" placeholder="Your Email" required autocomplete="email">
                 </div>
                 <div class="form-group">
-                    <input type="tel" id="bookingPhone" name="phone" placeholder="Your Phone" required>
+                        <label for="bookingPhone">Your Phone</label>
+                        <input type="tel" id="bookingPhone" name="phone" placeholder="Your Phone" required autocomplete="tel">
                 </div>
                 <div class="form-group">
+                        <label for="eventDate">Event Date</label>
                     <input type="date" id="eventDate" name="eventDate" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" id="location" name="location" placeholder="Event Location" required>
+                        <label for="location">Event Location</label>
+                        <input type="text" id="location" name="location" placeholder="Event Location" required autocomplete="street-address">
                 </div>
                 <div class="form-group">
-                    <textarea id="specialRequests" name="specialRequests" placeholder="Special Requests" rows="3"></textarea>
+                        <label for="specialRequests">Special Requests</label>
+                        <textarea id="specialRequests" name="specialRequests" placeholder="Special Requests" rows="3"></textarea>
                 </div>
-               <button type="submit" class="btn btn-primary">Confirm Order</button>
+                   <button type="submit" class="btn btn-primary btn-submit">
+                      <span class="btn-text">Confirm Order</span>
+                      <span class="btn-spinner" aria-hidden="true"></span>
+                   </button>
 
             </form>
-            <div id="bookingMessage" class="form-message"></div>
+                <div id="bookingMessage" class="form-message" aria-live="polite"></div>
         </div>
     </div>
+
+        <div class="floating-actions" aria-label="Quick contact actions">
+            <a class="floating-action floating-call" href="tel:+918884093228" aria-label="Call Party Paradise">
+                <i class="fas fa-phone"></i>
+            </a>
+            <a class="floating-action floating-whatsapp" href="https://wa.me/918884093228?text=Hi%20Party%20Paradise,%20I%20would%20like%20to%20enquire%20about%20an%20event." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
 
     <!-- Footer -->
     <footer class="footer">
