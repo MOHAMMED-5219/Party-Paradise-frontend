@@ -3,302 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Party Paradise - Premium Party Decorations</title>
+    <title>Party Paradise — Make It Unforgettable</title>
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <a class="skip-link" href="#home">Skip to content</a>
+
+    <!-- Floating Decorative Elements -->
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-badge">
+            <span class="preloader-star">✦</span>
+            <h2>Party <em>Paradise</em></h2>
+            <div class="preloader-bar"><span></span></div>
+        </div>
+    </div>
+
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <i class="fas fa-star"></i>
-                <span>Party Paradise</span>
-            </div>
-            <ul class="nav-menu">
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#home" class="logo">
+                <span class="logo-mark">🎈</span>
+                <span class="logo-text">Party<em>Paradise</em></span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#packages" class="nav-link">Packages</a></li>
                 <li><a href="#gallery" class="nav-link">Gallery</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#contact" class="nav-link nav-cta">Book Event <i class="fas fa-arrow-right"></i></a></li>
             </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section id="home" class="hero">
-        <div class="hero-background hero-background-a" aria-hidden="true"></div>
-        <div class="hero-background hero-background-b" aria-hidden="true"></div>
-        <span class="hero-orb hero-orb-one" aria-hidden="true"></span>
-        <span class="hero-orb hero-orb-two" aria-hidden="true"></span>
+        <div class="hero-badges">
+            <span class="hero-badge"><i class="fas fa-certificate"></i> Premium Decor Studio</span>
+            <span class="hero-badge"><i class="fas fa-map-marker-alt"></i> Koppal, Karnataka</span>
+        </div>
         <div class="hero-content">
-            <p class="hero-kicker">Premium decoration services for birthdays, weddings, and celebrations</p>
-            <h1 class="hero-title">Welcome To Party-Paradise</h1>
-            <p class="hero-subtitle">Make Your Party Unforgettable</p>
-            <p class="hero-description">Premium decoration services for all your special occasions</p>
+            <p class="hero-kicker"><span>✦</span> Where Dreams Get Dressed<span>✦</span></p>
+            <h1 class="hero-title">We Don't Decorate.</h1>
+            <h1 class="hero-title hero-title-accent">We <em>Celebrate</em> Life.</h1>
+            <p class="hero-subtitle">Premium decoration services for birthdays, weddings & every reason to pop the confetti.</p>
             <div class="hero-actions">
-                <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
-                <button type="button" class="btn btn-secondary" data-open-booking>Book Your Date</button>
+                <a href="#packages" class="btn btn-glow"><i class="fas fa-wand-magic-sparkles"></i> Explore Packages</a>
+                <a href="#gallery" class="btn btn-ghost"><i class="fas fa-play"></i> See Our Magic</a>
             </div>
-
+            <div class="hero-stats">
+                <div class="stat"><strong>500+</strong><span>Events Styled</span></div>
+                <div class="stat"><strong>9+</strong><span>Years of Craft</span></div>
+                <div class="stat"><strong>100%</strong><span>Smiles Delivered</span></div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="hero-balloons">
+            <span class="balloon">🎈</span>
+            <span class="balloon">🎊</span>
+            <span class="balloon">🎉</span>
+            <span class="balloon">✨</span>
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Marquee -->
+    <div class="marquee">
+        <div class="marquee-track">
+            <span>BIRTHDAYS</span><em>✦</em>
+            <span>WEDDINGS</span><em>✦</em>
+            <span>CORPORATE EVENTS</span><em>✦</em>
+            <span>BABY SHOWERS</span><em>✦</em>
+            <span>ANNIVERSARIES</span><em>✦</em>
+            <span>CUSTOM THEMES</span><em>✦</em>
+            <span>BIRTHDAYS</span><em>✦</em>
+            <span>WEDDINGS</span><em>✦</em>
+            <span>CORPORATE EVENTS</span><em>✦</em>
+            <span>BABY SHOWERS</span><em>✦</em>
+            <span>ANNIVERSARIES</span><em>✦</em>
+            <span>CUSTOM THEMES</span><em>✦</em>
+        </div>
+    </div>
+
+    <!-- Services -->
     <section id="services" class="services">
         <div class="container">
-            <h2 class="section-title">Our Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-birthday-cake"></i>
+            <div class="section-head">
+                <p class="section-eyebrow"><i class="fas fa-sparkles"></i> What We Do</p>
+                <h2 class="section-title">Crafted For Every <em>Celebration</em></h2>
+                <p class="section-desc">From intimate gatherings to grand galas — we style moments you'll never forget.</p>
+            </div>
+            <div class="services-bento">
+                <div class="service-card card-lg gradient-pink">
+                    <span class="service-icon"><i class="fas fa-birthday-cake"></i></span>
+                    <div class="service-text">
+                        <h3>Birthday Parties</h3>
+                        <p>Magical themed setups for every age — from first birthdays to golden jubilees.</p>
                     </div>
-                    <h3>Birthday Parties</h3>
-                    <p>Create magical moments with themed birthday decorations for all ages</p>
+                    <span class="service-num">01</span>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-ring"></i>
+                <div class="service-card gradient-violet">
+                    <span class="service-icon"><i class="fas fa-ring"></i></span>
+                    <div class="service-text">
+                        <h3>Weddings</h3>
+                        <p>Elegant, romantic stages & mandaps that whisper forever.</p>
                     </div>
-                    <h3>Weddings</h3>
-                    <p>Elegant and romantic setups to make your special day perfect</p>
+                    <span class="service-num">02</span>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-briefcase"></i>
+                <div class="service-card gradient-amber">
+                    <span class="service-icon"><i class="fas fa-briefcase"></i></span>
+                    <div class="service-text">
+                        <h3>Corporate Events</h3>
+                        <p>Professional backdrops & branding for launches and galas.</p>
                     </div>
-                    <h3>Corporate Events</h3>
-                    <p>Professional decorations for conferences, launches, and team events</p>
+                    <span class="service-num">03</span>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-baby"></i>
+                <div class="service-card gradient-mint">
+                    <span class="service-icon"><i class="fas fa-baby"></i></span>
+                    <div class="service-text">
+                        <h3>Baby Showers</h3>
+                        <p>Adorable pastel worlds to welcome your little miracle.</p>
                     </div>
-                    <h3>Baby Showers</h3>
-                    <p>Adorable and creative decorations for welcoming the new arrival</p>
+                    <span class="service-num">04</span>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-gifts"></i>
+                <div class="service-card gradient-magenta">
+                    <span class="service-icon"><i class="fas fa-gifts"></i></span>
+                    <div class="service-text">
+                        <h3>Anniversaries</h3>
+                        <p>Romantic red-carpet moments for every milestone year.</p>
                     </div>
-                    <h3>Anniversary</h3>
-                    <p>Celebrate love with beautiful anniversary decoration themes</p>
+                    <span class="service-num">05</span>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-star"></i>
+                <div class="service-card card-lg gradient-night">
+                    <span class="service-icon"><i class="fas fa-star"></i></span>
+                    <div class="service-text">
+                        <h3>Custom Events</h3>
+                        <p>Dreaming of something one-of-a-kind? We build it from scratch.</p>
                     </div>
-                    <h3>Custom Events</h3>
-                    <p>Tailored decorations for any special occasion you can imagine</p>
+                    <span class="service-num">06</span>
                 </div>
             </div>
         </div>
     </section>
 
-    
-
-    <section id="gallery" class="gallery">
-  <div class="container">
-    <h2 class="section-title">Our Recent Events</h2>
-
-    <div class="gallery-grid">
-
-      <!-- IMAGE -->
-      <div class="gallery-item">
-                <img src="gallery/event1.jpeg" alt="Birthday Decoration" loading="lazy" decoding="async">
-        <div class="gallery-overlay">
-          <h3>Birthday Event</h3>
-        </div>
-      </div>
-
-      <!-- IMAGE -->
-      <div class="gallery-item">
-                <img src="gallery/event2.jpeg" alt="Birthday Decoration" loading="lazy" decoding="async">
-        <div class="gallery-overlay">
-          <h3>Wedding Event</h3>
-        </div>
-      </div>
-      <!-- IMAGE -->
-      <div class="gallery-item">
-                <img src="gallery/event3.jpeg" alt="Wedding Decoration" loading="lazy" decoding="async">
-        <div class="gallery-overlay">
-          <h3>Wedding Event</h3>
-        </div>
-      </div>
-
-
-
-      <!-- VIDEO -->
-      <div class="gallery-item">
-                <video controls muted playsinline preload="metadata">
-                    <source src="gallery/event3.mp4" type="video/mp4">
-        </video>
-        <div class="gallery-overlay">
-          <h3>Wedding Decoration Video</h3>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
+    <!-- Packages -->
+    <section id="packages" class="packages">
         <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-wrapper">
-                <div class="contact-info">
-                    <h3>Contact Information</h3>
-                    <div class="info-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>Kinnal Road Koppal</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-phone"></i>
-                        <p>+91 8884093228</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-envelope"></i>
-                        <p>info@partyparadise.com</p>
-                    </div>
-                    <div class="social-links">
-                        
-
-
-                        <a href="https://www.instagram.com/partyparadisedecoration" target="_blank">
-    <i class="fab fa-instagram"></i>
-  </a>
-
-                     
-                    <a href="https://youtube.com/@partyparadise3114?si=hZBPqXs7ZrKP_24Nn" target="_blank">
-    <i class="fab fa-youtube"></i>
-    </a>
-
-
-                        
-                    </div>
-                </div>
-               <div class="contact-form">
-  <form id="contactForm">
-
-    <div class="form-group">
-            <label for="name">Your Name</label>
-            <input type="text" id="name" placeholder="Your Name" required autocomplete="name">
-    </div>
-
-    <div class="form-group">
-            <label for="email">Your Email</label>
-            <input type="email" id="email" placeholder="Your Email" required autocomplete="email">
-    </div>
-
-    <div class="form-group">
-            <label for="phone">Your Phone</label>
-            <input type="tel" id="phone" placeholder="Your Phone" required autocomplete="tel">
-    </div>
-
-    <div class="form-group">
-            <label for="message">Your Message</label>
-            <textarea id="message" placeholder="Your Message" rows="5"></textarea>
-    </div>
-
-        <button type="submit" class="btn btn-primary btn-submit">
-            <span class="btn-text">Send Message</span>
-            <span class="btn-spinner" aria-hidden="true"></span>
-    </button>
-
-        <p id="formMessage" class="form-message" aria-live="polite"></p>
-
-  </form>
-</div>
-
+            <div class="section-head">
+                <p class="section-eyebrow"><i class="fas fa-tags"></i> Pricing</p>
+                <h2 class="section-title">Pick Your <em>Perfect</em> Package</h2>
+                <p class="section-desc">Transparent pricing. Zero hidden costs. Maximum wow.</p>
+            </div>
+            <div class="packages-grid" id="packagesContainer">
+                <!-- Packages loaded dynamically by js/main.js -->
+            </div>
+        </div>
     </section>
 
-    <!-- Booking Modal -->
-    <div id="bookingModal" class="modal">
-        <div class="modal-content">
-                <button type="button" class="close" aria-label="Close booking modal">&times;</button>
-            <h2>Place Your Order</h2>
-
-            <form id="bookingForm">
-                <input type="hidden" id="packageId" name="packageId">
-                <div class="form-group">
-                        <label for="bookingName">Your Name</label>
-                        <input type="text" id="bookingName" name="name" placeholder="Your Name" required autocomplete="name">
+    <!-- Gallery -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <div class="section-head">
+                <p class="section-eyebrow"><i class="fas fa-camera-retro"></i> Portfolio</p>
+                <h2 class="section-title">Moments We've <em>Made</em></h2>
+                <p class="section-desc">A glimpse into the celebrations we've brought to life.</p>
+            </div>
+            <div class="gallery-mosaic">
+                <figure class="gallery-item tile-wide">
+                    <img src="gallery/event1.jpeg" alt="Birthday Decoration">
+                    <figcaption class="gallery-overlay">
+                        <span class="gallery-tag">Birthday</span>
+                        <h3>Boho Garden Bash</h3>
+                        <p>Balloon arch + candy bar</p>
+                    </figcaption>
+                </figure>
+                <figure class="gallery-item tile-tall">
+                    <img src="gallery/event2.jpeg" alt="Wedding Decoration">
+                    <figcaption class="gallery-overlay">
+                        <span class="gallery-tag">Wedding</span>
+                        <h3>Royal Stage Setup</h3>
+                        <p>Floral canopy + lighting</p>
+                    </figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="gallery/event3.jpeg" alt="Wedding Decoration">
+                    <figcaption class="gallery-overlay">
+                        <span class="gallery-tag">Wedding</span>
+                        <h3>Golden Hour Mandap</h3>
+                        <p>Marigold + gold theme</p>
+                    </figcaption>
+                </figure>
+                <figure class="gallery-item tile-video">
+                    <video controls muted playsinline preload="metadata">
+                        <source src="gallery/event3.mp4" type="video/mp4">
+                    </video>
+                    <figcaption class="gallery-overlay">
+                        <span class="gallery-tag">Reel</span>
+                        <h3>Behind The Scenes</h3>
+                        <p>Watch our setup in motion</p>
+                    </figcaption>
+                </figure>
+                <div class="gallery-cta">
+                    <p>Want <em>your</em> event here?</p>
+                    <a href="#contact" class="btn btn-glow"><i class="fas fa-calendar-check"></i> Book Now</a>
                 </div>
-                <div class="form-group">
-                        <label for="bookingEmail">Your Email</label>
-                        <input type="email" id="bookingEmail" name="email" placeholder="Your Email" required autocomplete="email">
-                </div>
-                <div class="form-group">
-                        <label for="bookingPhone">Your Phone</label>
-                        <input type="tel" id="bookingPhone" name="phone" placeholder="Your Phone" required autocomplete="tel">
-                </div>
-                <div class="form-group">
-                        <label for="eventDate">Event Date</label>
-                    <input type="date" id="eventDate" name="eventDate" required>
-                </div>
-                <div class="form-group">
-                        <label for="location">Event Location</label>
-                        <input type="text" id="location" name="location" placeholder="Event Location" required autocomplete="street-address">
-                </div>
-                <div class="form-group">
-                        <label for="specialRequests">Special Requests</label>
-                        <textarea id="specialRequests" name="specialRequests" placeholder="Special Requests" rows="3"></textarea>
-                </div>
-                   <button type="submit" class="btn btn-primary btn-submit">
-                      <span class="btn-text">Confirm Order</span>
-                      <span class="btn-spinner" aria-hidden="true"></span>
-                   </button>
-
-            </form>
-                <div id="bookingMessage" class="form-message" aria-live="polite"></div>
+            </div>
         </div>
-    </div>
+    </section>
 
-        <div class="floating-actions" aria-label="Quick contact actions">
-            <a class="floating-action floating-call" href="tel:+918884093228" aria-label="Call Party Paradise">
-                <i class="fas fa-phone"></i>
-            </a>
-            <a class="floating-action floating-whatsapp" href="https://wa.me/918884093228?text=Hi%20Party%20Paradise,%20I%20would%20like%20to%20enquire%20about%20an%20event." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-                <i class="fab fa-whatsapp"></i>
-            </a>
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-head">
+                <p class="section-eyebrow"><i class="fas fa-envelope-open-text"></i> Say Hello</p>
+                <h2 class="section-title">Let's Plan Your <em>Next</em> Party</h2>
+                <p class="section-desc">Tell us about your event — we'll reply within 24 hours.</p>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="info-card">
+                        <span class="info-icon"><i class="fas fa-map-marker-alt"></i></span>
+                        <div>
+                            <h4>Visit Our Studio</h4>
+                            <p>Kinnal Road, Koppal</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <span class="info-icon"><i class="fas fa-phone"></i></span>
+                        <div>
+                            <h4>Call Us</h4>
+                            <p>+91 88840 93228</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <span class="info-icon"><i class="fas fa-envelope"></i></span>
+                        <div>
+                            <h4>Email Us</h4>
+                            <p>info@partyparadise.com</p>
+                        </div>
+                    </div>
+                    <div class="info-card info-social">
+                        <span class="info-icon"><i class="fas fa-heart"></i></span>
+                        <div>
+                            <h4>Follow The Fun</h4>
+                            <div class="social-links">
+                                <a href="https://www.instagram.com/partyparadisedecoration" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="https://youtube.com/@partyparadise3114?si=hZBPqXs7ZrKP_24Nn" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" placeholder="Your Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" placeholder="Your Phone" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" placeholder="Tell us about your event..." rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-glow btn-block"><i class="fas fa-paper-plane"></i> Send Message</button>
+                    </form>
+                    <div id="formMessage" class="form-message"></div>
+                </div>
+            </div>
         </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
+        <div class="footer-balloon">🎈</div>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Party Paradise</h3>
-                    <p>Creating unforgettable moments with premium party decorations</p>
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <span class="logo-mark">🎈</span>
+                    <h3>Party<em>Paradise</em></h3>
+                    <p>Creating unforgettable moments with premium party decorations since 2017.</p>
                 </div>
-                <div class="footer-section">
+                <div class="footer-links">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#services">Services</a></li>
-                    
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#packages">Packages</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
                     </ul>
                 </div>
-                
+                <div class="footer-links">
+                    <h4>Get In Touch</h4>
+                    <ul>
+                        <li><a href="tel:+918884093228"><i class="fas fa-phone"></i> +91 88840 93228</a></li>
+                        <li><a href="mailto:info@partyparadise.com"><i class="fas fa-envelope"></i> info@partyparadise.com</a></li>
+                        <li><a href="#contact"><i class="fas fa-map-marker-alt"></i> Kinnal Road, Koppal</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Party Paradise Decoration. All rights reserved.</p>
+                <p>&copy; 2026 Party Paradise Decoration. All rights reserved. Made with <i class="fas fa-heart"></i> & confetti.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <button type="button" class="close" aria-label="Close booking modal">&times;</button>
+            <div class="modal-header">
+                <span class="modal-icon">🎉</span>
+                <h2>Reserve Your Date</h2>
+                <p>Fill in the details and we'll confirm in a jiffy!</p>
+            </div>
+            <form id="bookingForm">
+                <input type="hidden" id="packageId" name="packageId">
+                <div class="form-group">
+                    <input type="text" id="bookingName" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="bookingEmail" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="bookingPhone" name="phone" placeholder="Your Phone" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="date" id="eventDate" name="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="location" name="location" placeholder="Event Location" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <textarea id="specialRequests" name="specialRequests" placeholder="Special Requests (theme, colors...)" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-glow btn-block"><i class="fas fa-check-circle"></i> Confirm Order</button>
+            </form>
+            <div id="bookingMessage" class="form-message"></div>
+        </div>
+    </div>
+
+    <!-- Floating Actions -->
+    <div class="floating-actions" aria-label="Quick contact actions">
+        <a class="floating-action floating-call" href="tel:+918884093228" aria-label="Call Party Paradise">
+            <i class="fas fa-phone"></i>
+        </a>
+        <a class="floating-action floating-whatsapp" href="https://wa.me/918884093228?text=Hi%20Party%20Paradise,%20I%20would%20like%20to%20enquire%20about%20an%20event." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
-  
-
-

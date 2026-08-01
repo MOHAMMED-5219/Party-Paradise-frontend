@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Login - Party Paradise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
       margin: 0;
@@ -11,18 +13,52 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --bg-deep: #0b0118;
+      --bg-dark: #14042b;
+      --pink: #ff4fa3;
+      --violet: #9b5cff;
+      --cyan: #45e6ff;
+      --amber: #ffbe3d;
+      --mint: #6cf5b0;
+      --text-light: #ffffff;
+      --text-muted: #b8a9d4;
+      --text-soft: rgba(255, 255, 255, 0.75);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.12);
+      --gradient-pink: linear-gradient(135deg, #ff4fa3 0%, #ff8f5e 100%);
+      --gradient-violet: linear-gradient(135deg, #9b5cff 0%, #45e6ff 100%);
+      --glow-pink: 0 0 40px rgba(255, 79, 163, 0.4);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --font-display: 'Unbounded', cursive;
+      --font-body: 'Outfit', sans-serif;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      font-family: var(--font-body);
+      background: var(--bg-deep);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
       overflow: hidden;
+      color: var(--text-light);
     }
 
-    /* Animated background decorations */
+    /* Ambient background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 15% 0%, rgba(155, 92, 255, 0.18), transparent),
+        radial-gradient(ellipse 50% 40% at 85% 20%, rgba(255, 79, 163, 0.14), transparent),
+        radial-gradient(ellipse 55% 45% at 50% 100%, rgba(69, 230, 255, 0.10), transparent);
+      z-index: 0;
+      pointer-events: none;
+    }
+
     .background-decoration {
       position: fixed;
       width: 100%;
@@ -31,49 +67,46 @@
       left: 0;
       z-index: 0;
       overflow: hidden;
+      pointer-events: none;
     }
 
     .blob {
       position: absolute;
       border-radius: 50%;
-      opacity: 0.1;
-      animation: float 6s ease-in-out infinite;
+      filter: blur(90px);
+      opacity: 0.25;
+      animation: float 8s ease-in-out infinite;
     }
 
     .blob1 {
-      width: 300px;
-      height: 300px;
-      background: white;
-      top: -50px;
-      left: -50px;
-      animation-delay: 0s;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, #ff4fa3, transparent 70%);
+      top: -80px;
+      left: -80px;
     }
 
     .blob2 {
-      width: 250px;
-      height: 250px;
-      background: white;
-      bottom: -50px;
-      right: -50px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, #9b5cff, transparent 70%);
+      bottom: -60px;
+      right: -60px;
       animation-delay: 2s;
     }
 
     .blob3 {
-      width: 200px;
-      height: 200px;
-      background: white;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, #45e6ff, transparent 70%);
       top: 50%;
       right: 10%;
       animation-delay: 4s;
     }
 
     @keyframes float {
-      0%, 100% {
-        transform: translate(0, 0) scale(1);
-      }
-      50% {
-        transform: translate(30px, -30px) scale(1.1);
-      }
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, -30px) scale(1.1); }
     }
 
     .container {
@@ -85,30 +118,27 @@
     }
 
     .login-wrapper {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.3);
+      background: linear-gradient(160deg, #1c0b35, #14042b);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: var(--glass-border);
+      border-radius: var(--radius);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
       overflow: hidden;
       animation: slideUp 0.6s ease-out;
     }
 
     @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .login-header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-      padding: 50px 30px;
+      background: linear-gradient(135deg, rgba(255, 79, 163, 0.15), rgba(155, 92, 255, 0.15));
+      border-bottom: var(--glass-border);
+      padding: 45px 30px;
       text-align: center;
-      color: white;
+      color: var(--text-light);
       position: relative;
       overflow: hidden;
     }
@@ -120,12 +150,13 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="15" fill="white" opacity="0.05"/><circle cx="80" cy="80" r="20" fill="white" opacity="0.05"/><circle cx="50" cy="50" r="10" fill="white" opacity="0.05"/></svg>');
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="15" fill="white" opacity="0.04"/><circle cx="80" cy="80" r="20" fill="white" opacity="0.04"/><circle cx="50" cy="50" r="10" fill="white" opacity="0.04"/></svg>');
       pointer-events: none;
     }
 
     .login-header h1 {
-      font-size: 32px;
+      font-family: var(--font-display);
+      font-size: 28px;
       margin-bottom: 8px;
       font-weight: 700;
       position: relative;
@@ -134,40 +165,38 @@
     }
 
     .login-header p {
-      font-size: 14px;
-      opacity: 0.95;
-      letter-spacing: 1px;
+      font-size: 12px;
+      opacity: 0.85;
+      letter-spacing: 2px;
       position: relative;
       z-index: 2;
       text-transform: uppercase;
       font-weight: 500;
+      color: var(--text-muted);
     }
 
     .login-icon {
-      font-size: 56px;
+      font-size: 52px;
       margin-bottom: 15px;
       position: relative;
       z-index: 2;
       animation: bounce 2s ease-in-out infinite;
+      display: inline-block;
     }
 
     @keyframes bounce {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-10px);
-      }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     .login-form {
-      padding: 45px 35px;
+      padding: 40px 35px;
     }
 
     .forgot-password {
       display: inline-flex;
       margin-top: 12px;
-      color: #667eea;
+      color: var(--pink);
       font-size: 13px;
       font-weight: 600;
       text-decoration: none;
@@ -175,7 +204,7 @@
     }
 
     .forgot-password:hover {
-      color: #764ba2;
+      color: var(--amber);
       text-decoration: underline;
     }
 
@@ -186,12 +215,12 @@
 
     .form-group label {
       display: block;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      color: #333;
+      color: var(--text-soft);
       margin-bottom: 10px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
     }
 
     .input-wrapper {
@@ -203,7 +232,7 @@
       left: 15px;
       top: 50%;
       transform: translateY(-50%);
-      color: #667eea;
+      color: var(--pink);
       font-size: 18px;
       pointer-events: none;
       transition: all 0.3s ease;
@@ -212,37 +241,38 @@
     .form-group input {
       width: 100%;
       padding: 13px 15px 13px 45px;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
       font-size: 15px;
       transition: all 0.3s ease;
-      font-family: inherit;
-      background: #f8f9ff;
+      font-family: var(--font-body);
+      color: var(--text-light);
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255, 255, 255, 0.35);
     }
 
     .form-group input:focus {
       outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
-      background-color: white;
+      border-color: var(--pink);
+      box-shadow: 0 0 0 4px rgba(255, 79, 163, 0.15);
+      background: rgba(255, 79, 163, 0.06);
     }
 
     .form-group input:focus + .input-icon {
-      color: #764ba2;
+      color: var(--amber);
       transform: translateY(-50%) scale(1.2);
-    }
-
-    .form-group input::placeholder {
-      color: #999;
     }
 
     .login-btn {
       width: 100%;
       padding: 14px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: var(--gradient-pink);
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
@@ -252,6 +282,8 @@
       letter-spacing: 1.2px;
       position: relative;
       overflow: hidden;
+      font-family: var(--font-body);
+      box-shadow: var(--glow-pink);
     }
 
     .login-btn::before {
@@ -271,7 +303,7 @@
 
     .login-btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+      box-shadow: 0 15px 40px rgba(255, 79, 163, 0.5);
     }
 
     .login-btn:active {
@@ -303,18 +335,16 @@
     }
 
     @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+      to { transform: rotate(360deg); }
     }
 
     .error {
-      color: #e74c3c;
+      color: #ff6b8a;
       font-size: 13px;
       margin-top: 15px;
       padding: 12px 15px;
-      background-color: #ffe0e0;
-      border-left: 4px solid #e74c3c;
+      background-color: rgba(255, 79, 163, 0.12);
+      border-left: 4px solid var(--pink);
       border-radius: 8px;
       display: none;
       animation: shake 0.5s ease;
@@ -332,12 +362,12 @@
     }
 
     .success-message {
-      color: #27ae60;
+      color: var(--mint);
       font-size: 13px;
       margin-top: 15px;
       padding: 12px 15px;
-      background-color: #e0ffe0;
-      border-left: 4px solid #27ae60;
+      background-color: rgba(108, 245, 176, 0.12);
+      border-left: 4px solid var(--mint);
       border-radius: 8px;
       display: none;
       animation: slideIn 0.3s ease;
@@ -348,20 +378,14 @@
     }
 
     @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .footer-text {
       text-align: center;
       margin-top: 25px;
-      color: rgba(0, 0, 0, 0.4);
+      color: var(--text-muted);
       font-size: 12px;
       letter-spacing: 0.5px;
     }
@@ -371,9 +395,10 @@
       position: fixed;
       inset: 0;
       z-index: 2000;
-      background: rgba(15, 23, 42, 0.52);
+      background: rgba(6, 1, 15, 0.75);
       padding: 20px;
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .modal.show {
@@ -385,29 +410,33 @@
     .modal-card {
       width: 100%;
       max-width: 420px;
-      background: rgba(255, 255, 255, 0.97);
-      border-radius: 18px;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+      background: linear-gradient(160deg, #1c0b35, #14042b);
+      border: var(--glass-border);
+      border-radius: var(--radius);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
       overflow: hidden;
       animation: slideUp 0.25s ease-out;
     }
 
     .modal-head {
       padding: 22px 24px 16px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      background: linear-gradient(135deg, rgba(255, 79, 163, 0.15), rgba(155, 92, 255, 0.15));
+      border-bottom: var(--glass-border);
+      color: var(--text-light);
     }
 
     .modal-head h3 {
-      font-size: 20px;
+      font-family: var(--font-display);
+      font-size: 18px;
       margin-bottom: 6px;
     }
 
     .modal-head p {
       font-size: 13px;
-      opacity: 0.92;
+      opacity: 0.85;
       text-transform: none;
       letter-spacing: 0;
+      color: var(--text-muted);
     }
 
     .modal-body {
@@ -423,17 +452,18 @@
     .secondary-btn {
       width: 100%;
       padding: 14px;
-      border-radius: 10px;
-      border: 1px solid #d9def7;
-      background: #fff;
-      color: #667eea;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-light);
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s ease;
+      font-family: var(--font-body);
     }
 
     .secondary-btn:hover {
-      background: #f6f8ff;
+      background: rgba(255, 255, 255, 0.12);
     }
 
     .reset-step {
@@ -447,18 +477,18 @@
     .otp-hint {
       margin-top: 10px;
       font-size: 13px;
-      color: #555;
+      color: var(--text-muted);
       line-height: 1.5;
     }
 
     .mini-label {
       display: block;
       margin-bottom: 8px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      color: #333;
+      color: var(--text-soft);
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
     }
 
     .mobile-pill {
@@ -466,10 +496,34 @@
       margin-top: 6px;
       padding: 6px 10px;
       border-radius: 999px;
-      background: #eef2ff;
-      color: #4f46e5;
+      background: rgba(155, 92, 255, 0.15);
+      color: #cfb5ff;
       font-size: 12px;
       font-weight: 700;
+    }
+
+    .modal-body input {
+      width: 100%;
+      padding: 13px 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      font-family: var(--font-body);
+      color: var(--text-light);
+      margin-bottom: 4px;
+    }
+
+    .modal-body input::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .modal-body input:focus {
+      outline: none;
+      border-color: var(--pink);
+      box-shadow: 0 0 0 4px rgba(255, 79, 163, 0.15);
+      background: rgba(255, 79, 163, 0.06);
     }
 
     @media (max-width: 480px) {
@@ -482,15 +536,15 @@
       }
 
       .login-header h1 {
-        font-size: 28px;
+        font-size: 24px;
       }
 
       .login-icon {
-        font-size: 48px;
+        font-size: 44px;
       }
 
       .blob1, .blob2, .blob3 {
-        opacity: 0.05;
+        opacity: 0.15;
       }
     }
   </style>
@@ -501,7 +555,6 @@
     <div class="blob blob2"></div>
     <div class="blob blob3"></div>
   </div>
-
 
   <div class="container">
     <div class="login-wrapper">
@@ -517,7 +570,7 @@
             <label for="email">Email Address</label>
             <div class="input-wrapper">
               <input type="email" id="email" placeholder="Enter your admin email" required>
-              <span class="input-icon">📧</span>
+              <span class="input-icon"><i class="fas fa-envelope"></i></span>
             </div>
           </div>
 
@@ -525,7 +578,7 @@
             <label for="password">Password</label>
             <div class="input-wrapper">
               <input type="password" id="password" placeholder="Enter your password" required>
-              <span class="input-icon">🔐</span>
+              <span class="input-icon"><i class="fas fa-lock"></i></span>
             </div>
           </div>
 
@@ -602,9 +655,9 @@ function setMessage(element, text, type) {
   element.classList.remove("show");
   element.style.display = "block";
   element.textContent = text;
-  element.style.color = type === "success" ? "#1f8f56" : "#e74c3c";
-  element.style.backgroundColor = type === "success" ? "#e0ffe0" : "#ffe0e0";
-  element.style.borderLeftColor = type === "success" ? "#27ae60" : "#e74c3c";
+  element.style.color = type === "success" ? "#6cf5b0" : "#ff6b8a";
+  element.style.backgroundColor = type === "success" ? "rgba(108, 245, 176, 0.12)" : "rgba(255, 79, 163, 0.12)";
+  element.style.borderLeftColor = type === "success" ? "#6cf5b0" : "#ff4fa3";
   element.classList.add("show");
 }
 

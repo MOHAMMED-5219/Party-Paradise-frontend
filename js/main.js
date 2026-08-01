@@ -1,255 +1,420 @@
 // ================= CONFIG =================
 const API_URL = "https://party-paradise-backend-mr44.onrender.com/api";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const navbar = document.querySelector(".navbar");
-  const hamburger = document.querySelector(".hamburger");
-  const navMenu = document.querySelector(".nav-menu");
-  const navLinks = Array.from(document.querySelectorAll(".nav-link"));
-  const sections = Array.from(document.querySelectorAll("section[id]")).filter(
-    (section) => section.id !== "home" || section.classList.contains("hero")
-  );
-  const hero = document.querySelector(".hero");
-  const heroBackgroundA = document.querySelector(".hero-background-a");
-  const heroBackgroundB = document.querySelector(".hero-background-b");
-  const bookingModal = document.getElementById("bookingModal");
-  const bookingForm = document.getElementById("bookingForm");
-  const bookingMessage = document.getElementById("bookingMessage");
-  const bookingSubmit = bookingForm?.querySelector(".btn-submit");
-  const openBookingButtons = document.querySelectorAll("[data-open-booking]");
-  const closeBookingButton = bookingModal?.querySelector(".close");
-  const contactForm = document.getElementById("contactForm");
-  const contactMessage = document.getElementById("formMessage");
-  const contactSubmit = contactForm?.querySelector(".btn-submit");
-  const revealTargets = Array.from(document.querySelectorAll(
-    ".services, .gallery, .contact, .footer, .package-card, .service-card, .gallery-item, .contact-info, .contact-form"
-  ));
+// =====================================================
+// PRELOADER
+// =====================================================
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        setTimeout(() => {
+            preloader.classList.add('hidden');
+            // Fire a welcoming confetti burst
+            if (typeof confetti !== 'undefined') {
+                const duration = 1500;
+                const end = Date.now() + duration;
+                (function frame() {
+                    confetti({
+                        particleCount: 4,
+                        angle: 60,
+                        spread: 60,
+                        origin: { x: 0, y: 0.8 },
+                        colors: ['#ff4fa3', '#ffbe3d', '#45e6ff', '#6cf5b0', '#9b5cff']
+                    });
+                    confetti({
+                        particleCount: 4,
+                        angle: 120,
+                        spread: 60,
+                        origin: { x: 1, y: 0.8 },
+                        colors: ['#ff4fa3', '#ffbe3d', '#45e6ff', '#6cf5b0', '#9b5cff']
+                    });
+                    if (Date.now() < end) {
+                        requestAnimationFrame(frame);
+                    }
+                })();
+            }
+            setTimeout(() => { preloader.style.display = 'none'; }, 700);
+        }, 1400);
+    }
+});
 
-  const heroImages = [
-    "gallery/event2.jpeg",
-    "gallery/event1.jpeg",
-    "gallery/event3.jpeg",
-    "gallery/Birthday/b1.jpg",
-    "gallery/Birthday/b2.jpg",
-  ];
-  let heroIndex = 0;
-  let heroShowingA = true;
+// =====================================================
+// NAVBAR SCROLL EFFECT
+// =====================================================
+const navbar = document.querySelector('.navbar');
 
-  if (heroBackgroundA) {
-    heroBackgroundA.style.backgroundImage = `url('${heroImages[0]}')`;
-  }
-  if (heroBackgroundB) {
-    heroBackgroundB.style.backgroundImage = `url('${heroImages[1] || heroImages[0]}')`;
-  }
-
-  const openModal = () => {
-    if (!bookingModal) return;
-    bookingModal.classList.add("is-open");
-    document.body.classList.add("nav-open");
-    const firstField = bookingModal.querySelector("input, textarea, button");
-    window.setTimeout(() => firstField?.focus(), 50);
-  };
-
-  const closeModal = () => {
-    if (!bookingModal) return;
-    bookingModal.classList.remove("is-open");
-    document.body.classList.remove("nav-open");
-  };
-
-  const setMessage = (element, type, text) => {
-    if (!element) return;
-    element.className = `form-message ${type} is-visible`;
-    element.textContent = text;
-  };
-
-  const setLoadingState = (button, loading) => {
-    if (!button) return;
-    button.classList.toggle("is-loading", loading);
-    button.disabled = loading;
-  };
-
-  const toggleMobileMenu = (open) => {
-    if (!navMenu || !hamburger) return;
-    navMenu.classList.toggle("active", open);
-    hamburger.classList.toggle("active", open);
-    document.body.classList.toggle("nav-open", open);
-  };
-
-  const updateActiveLink = () => {
-    const scrollPosition = window.scrollY + 120;
-
-    navLinks.forEach((link) => link.classList.remove("active"));
-
-    let activeSectionId = "home";
-
-    sections.forEach((section) => {
-      if (scrollPosition >= section.offsetTop) {
-        activeSectionId = section.id;
-      }
-    });
-
-    const activeLink = navLinks.find((link) => link.getAttribute("href") === `#${activeSectionId}`);
-    activeLink?.classList.add("active");
-  };
-
-  const updateNavbar = () => {
-    navbar?.classList.toggle("is-scrolled", window.scrollY > 8);
-  };
-
-  const advanceHero = () => {
-    if (!hero || !heroBackgroundA || !heroBackgroundB) return;
-    heroIndex = (heroIndex + 1) % heroImages.length;
-    const nextIndex = (heroIndex + 1) % heroImages.length;
-    const nextBackground = heroShowingA ? heroBackgroundB : heroBackgroundA;
-    const currentBackground = heroShowingA ? heroBackgroundA : heroBackgroundB;
-
-    nextBackground.style.backgroundImage = `url('${heroImages[heroIndex]}')`;
-    hero.classList.add("hero-fading");
-
-    window.setTimeout(() => {
-      currentBackground.style.backgroundImage = `url('${heroImages[nextIndex]}')`;
-      hero.classList.remove("hero-fading");
-      heroShowingA = !heroShowingA;
-      heroIndex = nextIndex;
-    }, 1200);
-  };
-
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          revealObserver.unobserve(entry.target);
+window.addEventListener('scroll', () => {
+    if (navbar) {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
         }
-      });
-    },
-    { threshold: 0.16, rootMargin: "0px 0px -10% 0px" }
-  );
-
-  revealTargets.forEach((target) => {
-    if (target && !target.classList.contains("hero") && !target.classList.contains("footer")) {
-      target.classList.add("section-reveal");
-      revealObserver.observe(target);
     }
-  });
+});
 
-  hamburger?.addEventListener("click", () => {
-    const isOpen = navMenu?.classList.contains("active");
-    toggleMobileMenu(!isOpen);
-  });
+// =====================================================
+// MOBILE MENU TOGGLE
+// =====================================================
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
 
-  navLinks.forEach((link) => {
-    link.addEventListener("click", () => toggleMobileMenu(false));
-  });
+hamburger?.addEventListener('click', () => {
+    navMenu?.classList.toggle('active');
+    hamburger.classList.toggle('active');
+    document.body.classList.toggle('nav-open');
+});
 
-  openBookingButtons.forEach((button) => {
-    button.addEventListener("click", openModal);
-  });
+// =====================================================
+// SMOOTH SCROLLING
+// =====================================================
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        const targetId = link.getAttribute('href');
+        if (targetId && targetId.startsWith('#')) {
+            e.preventDefault();
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+                // Close mobile menu if open
+                navMenu?.classList.remove('active');
+                hamburger?.classList.remove('active');
+                document.body.classList.remove('nav-open');
 
-  closeBookingButton?.addEventListener("click", closeModal);
+                const offsetTop = targetSection.offsetTop - 70;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+});
 
-  bookingModal?.addEventListener("click", (event) => {
-    if (event.target === bookingModal) {
-      closeModal();
+// =====================================================
+// LOAD PACKAGES
+// =====================================================
+const packagesContainer = document.getElementById('packagesContainer');
+
+async function loadPackages() {
+    try {
+        const response = await fetch(`${API_URL}/packages`);
+        const packages = await response.json();
+
+        if (packages.length > 0) {
+            displayPackages(packages);
+        } else {
+            // Display default packages if none in database
+            displayDefaultPackages();
+        }
+    } catch (error) {
+        console.error('Error loading packages:', error);
+        displayDefaultPackages();
     }
-  });
+}
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeModal();
-      toggleMobileMenu(false);
+function displayDefaultPackages() {
+    const defaultPackages = [
+        {
+            _id: 'basic',
+            name: 'Basic Package',
+            price: 299,
+            features: [
+                'Balloon Decorations',
+                'Table Setup',
+                'Basic Lighting',
+                'Photo Backdrop',
+                '4 Hours Service'
+            ]
+        },
+        {
+            _id: 'premium',
+            name: 'Premium Package',
+            price: 599,
+            features: [
+                'Premium Balloon Arrangements',
+                'Elegant Table Settings',
+                'Professional Lighting',
+                'Custom Photo Booth',
+                'Floral Centerpieces',
+                '6 Hours Service',
+                'Free Consultation'
+            ]
+        },
+        {
+            _id: 'luxury',
+            name: 'Luxury Package',
+            price: 999,
+            features: [
+                'Designer Balloon Installations',
+                'Luxury Table Settings',
+                'Advanced Lighting System',
+                'Premium Photo Booth',
+                'Exotic Floral Arrangements',
+                'Custom Props & Accessories',
+                '8 Hours Service',
+                'Dedicated Event Coordinator',
+                'Free Setup & Cleanup'
+            ]
+        }
+    ];
+
+    displayPackages(defaultPackages);
+}
+
+function displayPackages(packages) {
+    packagesContainer.innerHTML = '';
+
+    packages.forEach(pkg => {
+        const packageCard = document.createElement('div');
+        packageCard.className = 'package-card';
+
+        const featuresHTML = (pkg.features || []).map(feature =>
+            `<li><i class="fas fa-check"></i> ${feature}</li>`
+        ).join('');
+
+        packageCard.innerHTML = `
+            <div class="package-header">
+                <h3>${pkg.name}</h3>
+                <div class="package-price">$${pkg.price}</div>
+            </div>
+            <div class="package-body">
+                <ul class="package-features">
+                    ${featuresHTML}
+                </ul>
+                <button class="btn btn-primary btn-block" onclick="openBookingModal('${pkg._id}', '${pkg.name}')">
+                    <i class="fas fa-calendar-check"></i> Book Now
+                </button>
+            </div>
+        `;
+
+        packagesContainer.appendChild(packageCard);
+    });
+}
+
+// =====================================================
+// OPEN / CLOSE BOOKING MODAL
+// =====================================================
+const bookingModal = document.getElementById('bookingModal');
+const closeModalBtn = document.querySelector('.close');
+
+function openBookingModal(packageId, packageName) {
+    document.getElementById('packageId').value = packageId;
+    bookingModal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeBookingModal() {
+    bookingModal.classList.remove('is-open');
+    document.body.style.overflow = '';
+}
+
+closeModalBtn?.addEventListener('click', closeBookingModal);
+
+window.addEventListener('click', (e) => {
+    if (e.target === bookingModal) {
+        closeBookingModal();
     }
-  });
+});
 
-  window.addEventListener("scroll", () => {
-    updateNavbar();
-    updateActiveLink();
-  }, { passive: true });
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeBookingModal();
+        navMenu?.classList.remove('active');
+        hamburger?.classList.remove('active');
+        document.body.classList.remove('nav-open');
+    }
+});
 
-  updateNavbar();
-  updateActiveLink();
+// =====================================================
+// CONTACT FORM SUBMISSION
+// =====================================================
+const contactForm = document.getElementById('contactForm');
 
-  window.setInterval(advanceHero, 7000);
+contactForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-  if (contactForm) {
-    contactForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        message: document.getElementById('message').value
+    };
 
-      const name = document.getElementById("name")?.value.trim();
-      const email = document.getElementById("email")?.value.trim();
-      const phone = document.getElementById("phone")?.value.trim();
-      const message = document.getElementById("message")?.value.trim();
+    const messageDiv = document.getElementById('formMessage');
 
-      setLoadingState(contactSubmit, true);
-      setMessage(contactMessage, "info", "Sending your message...");
-
-      try {
+    try {
         const response = await fetch(`${API_URL}/contact`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, email, phone, message }),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
         });
 
         const result = await response.json();
 
-        if (response.ok && result.success) {
-          setMessage(contactMessage, "success", "Thank you. We have received your message and will contact you soon.");
-          contactForm.reset();
+        if (response.ok) {
+            messageDiv.textContent = '🎉 Thank you! We will contact you soon.';
+            messageDiv.className = 'form-message success';
+            contactForm.reset();
+            // Celebrate!
+            if (typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 100,
+                    spread: 75,
+                    origin: { y: 0.6 },
+                    colors: ['#ff4fa3', '#ffbe3d', '#45e6ff', '#6cf5b0', '#9b5cff']
+                });
+            }
         } else {
-          setMessage(contactMessage, "error", "Something went wrong. Please try again.");
+            messageDiv.textContent = 'Something went wrong. Please try again.';
+            messageDiv.className = 'form-message error';
         }
-      } catch (error) {
-        console.error("FRONTEND ERROR:", error);
-        setMessage(contactMessage, "error", "Server error. Please try again later.");
-      } finally {
-        setLoadingState(contactSubmit, false);
-      }
-    });
-  }
 
-  if (bookingForm) {
-    bookingForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
+        setTimeout(() => {
+            messageDiv.className = 'form-message';
+        }, 5000);
+    } catch (error) {
+        console.error('Error:', error);
+        messageDiv.textContent = 'Error sending message. Please try again.';
+        messageDiv.className = 'form-message error';
+    }
+});
 
-      const payload = {
-        packageId: document.getElementById("packageId")?.value,
-        name: document.getElementById("bookingName")?.value.trim(),
-        email: document.getElementById("bookingEmail")?.value.trim(),
-        phone: document.getElementById("bookingPhone")?.value.trim(),
-        eventDate: document.getElementById("eventDate")?.value,
-        location: document.getElementById("location")?.value.trim(),
-        specialRequests: document.getElementById("specialRequests")?.value.trim(),
-      };
+// =====================================================
+// BOOKING FORM SUBMISSION
+// =====================================================
+const bookingForm = document.getElementById('bookingForm');
 
-      setLoadingState(bookingSubmit, true);
-      setMessage(bookingMessage, "info", "Submitting your booking...");
+bookingForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      try {
-        const response = await fetch(`${API_URL}/booking`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
+    const formData = {
+        packageId: document.getElementById('packageId').value,
+        name: document.getElementById('bookingName').value,
+        email: document.getElementById('bookingEmail').value,
+        phone: document.getElementById('bookingPhone').value,
+        eventDate: document.getElementById('eventDate').value,
+        location: document.getElementById('location').value,
+        specialRequests: document.getElementById('specialRequests').value
+    };
+
+    const messageDiv = document.getElementById('bookingMessage');
+
+    try {
+        const response = await fetch(`${API_URL}/bookings`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
         });
 
         const result = await response.json();
 
-        if (response.ok && result.success) {
-          setMessage(bookingMessage, "success", "Your booking request was sent successfully.");
-          bookingForm.reset();
-          window.setTimeout(closeModal, 900);
+        if (response.ok) {
+            messageDiv.textContent = '🎊 Booking confirmed! We will contact you shortly.';
+            messageDiv.className = 'form-message success';
+            bookingForm.reset();
+            // Big celebration!
+            if (typeof confetti !== 'undefined') {
+                const duration = 2000;
+                const end = Date.now() + duration;
+                (function frame() {
+                    confetti({
+                        particleCount: 6,
+                        angle: 60,
+                        spread: 65,
+                        origin: { x: 0, y: 0.7 },
+                        colors: ['#ff4fa3', '#ffbe3d', '#45e6ff', '#6cf5b0', '#9b5cff']
+                    });
+                    confetti({
+                        particleCount: 6,
+                        angle: 120,
+                        spread: 65,
+                        origin: { x: 1, y: 0.7 },
+                        colors: ['#ff4fa3', '#ffbe3d', '#45e6ff', '#6cf5b0', '#9b5cff']
+                    });
+                    if (Date.now() < end) {
+                        requestAnimationFrame(frame);
+                    }
+                })();
+            }
+
+            setTimeout(() => {
+                closeBookingModal();
+                messageDiv.className = 'form-message';
+            }, 5000);
         } else {
-          setMessage(bookingMessage, "error", result.message || "Unable to submit booking. Please try again.");
+            messageDiv.textContent = 'Booking failed. Please try again.';
+            messageDiv.className = 'form-message error';
         }
-      } catch (error) {
-        console.error("BOOKING ERROR:", error);
-        setMessage(bookingMessage, "error", "Server error. Please try again later.");
-      } finally {
-        setLoadingState(bookingSubmit, false);
-      }
+    } catch (error) {
+        console.error('Error:', error);
+        messageDiv.textContent = 'Error processing booking. Please try again.';
+        messageDiv.className = 'form-message error';
+    }
+});
+
+// =====================================================
+// SET MINIMUM DATE FOR EVENT BOOKING TO TODAY
+// =====================================================
+const eventDateInput = document.getElementById('eventDate');
+if (eventDateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    eventDateInput.setAttribute('min', today);
+}
+
+// =====================================================
+// HERO BACKGROUND SLIDER
+// =====================================================
+const hero = document.querySelector('.hero');
+
+const heroImages = [
+    'images/hero/hero1.jpg',
+    'images/hero/hero2.jpg',
+    'images/hero/hero3.jpg',
+    'images/hero/hero4.jpg'
+];
+
+let currentIndex = 0;
+
+// Initial image
+if (hero) {
+    hero.style.backgroundImage = `url(${heroImages[currentIndex]})`;
+
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % heroImages.length;
+        hero.style.backgroundImage = `url(${heroImages[currentIndex]})`;
+    }, 4000); // 4 seconds per slide
+}
+
+// =====================================================
+// ANIMATION ON SCROLL
+// =====================================================
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+        }
     });
-  }
+}, observerOptions);
+
+// Observe elements for animation
+document.querySelectorAll('.service-card, .package-card, .gallery-item, .section-head').forEach(el => {
+    el.classList.add('section-reveal');
+    revealObserver.observe(el);
+});
+
+// =====================================================
+// INITIALIZE
+// =====================================================
+document.addEventListener('DOMContentLoaded', () => {
+    loadPackages();
 });
