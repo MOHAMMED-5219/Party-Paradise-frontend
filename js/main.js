@@ -112,54 +112,7 @@ async function loadPackages() {
     }
 }
 
-function displayDefaultPackages() {
-    const defaultPackages = [
-        {
-            _id: 'basic',
-            name: 'Basic Package',
-            price: 299,
-            features: [
-                'Balloon Decorations',
-                'Table Setup',
-                'Basic Lighting',
-                'Photo Backdrop',
-                '4 Hours Service'
-            ]
-        },
-        {
-            _id: 'premium',
-            name: 'Premium Package',
-            price: 599,
-            features: [
-                'Premium Balloon Arrangements',
-                'Elegant Table Settings',
-                'Professional Lighting',
-                'Custom Photo Booth',
-                'Floral Centerpieces',
-                '6 Hours Service',
-                'Free Consultation'
-            ]
-        },
-        {
-            _id: 'luxury',
-            name: 'Luxury Package',
-            price: 999,
-            features: [
-                'Designer Balloon Installations',
-                'Luxury Table Settings',
-                'Advanced Lighting System',
-                'Premium Photo Booth',
-                'Exotic Floral Arrangements',
-                'Custom Props & Accessories',
-                '8 Hours Service',
-                'Dedicated Event Coordinator',
-                'Free Setup & Cleanup'
-            ]
-        }
-    ];
 
-    displayPackages(defaultPackages);
-}
 
 function displayPackages(packages) {
     packagesContainer.innerHTML = '';
