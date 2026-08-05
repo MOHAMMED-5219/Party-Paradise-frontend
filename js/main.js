@@ -1,5 +1,5 @@
 // ================= CONFIG =================
-const API_URL = "https://party-paradise-backend-mr44.onrender.com/api";
+const API_URL = "https://party-paradise-apggecgjd3hcaaes.centralindia-01.azurewebsites.net/api";
 
 // =====================================================
 // PRELOADER
